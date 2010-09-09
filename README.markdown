@@ -1,3 +1,5 @@
+I modified this plugin to work with mongoid.
+
 # rails3-jquery-autocomplete
 
 An easy way to use jQuery's autocomplete with Rails 3. You can find a [detailed example](http://github.com/crowdint/rails3-jquery-autocomplete-app) 

@@ -5,6 +5,9 @@
 *.tmproj
 tmtags
 
+## REDCAR
+.redcar
+
 ## EMACS
 *~
 \#*

@@ -1,5 +1,3 @@
-require 'form_helper'
-
 module Rails3JQueryAutocomplete
   def self.included(base)
     base.extend(ClassMethods)
@@ -27,24 +25,22 @@ module Rails3JQueryAutocomplete
   #
   module ClassMethods
     def autocomplete(object, method, options = {})
-      limit = options[:limit] || 10
-      order = options[:order] || "#{method} ASC"
 
       define_method("autocomplete_#{object}_#{method}") do
         unless params[:term] && params[:term].empty?
-          items = object.to_s.camelize.constantize.where(["LOWER(#{method}) LIKE ?", "#{(options[:full] ? '%' : '')}#{params[:term].downcase}%"]).limit(limit).order(order)
+          items = Category.where("this.name.match(/#{params[:term]}/i)").limit(10).asc(:name)
         else
           items = {}
         end
 
-        render :json => json_for_autocomplete(items, (options[:display_value] ? options[:display_value] : method))
+        render :json => json_for_autocomplete(items, method)
       end
     end
   end
 
   private
   def json_for_autocomplete(items, method)
-    items.collect {|i| {"id" => i.id, "label" => i.send(method), "value" => i.send(method)}}
+    items.collect {|i| {"id" => "#{i.id}", "label" => "#{i.name}", "value" => "#{i.name}"}}
   end
 end
 
