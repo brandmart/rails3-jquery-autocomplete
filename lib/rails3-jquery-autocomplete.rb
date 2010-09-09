@@ -28,7 +28,7 @@ module Rails3JQueryAutocomplete
 
       define_method("autocomplete_#{object}_#{method}") do
         unless params[:term] && params[:term].empty?
-          items = Category.where("this.name.match(/#{params[:term]}/i)").limit(10).asc(:name)
+          items = Category.where("this.name.match(/#{params[:term]}/i)").limit(10).asc("#{method}")
         else
           items = {}
         end
